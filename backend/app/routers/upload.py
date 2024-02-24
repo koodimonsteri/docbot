@@ -1,7 +1,8 @@
 import logging
+from pathlib import Path
 
 from database.database import search_embeddings, ingest_embeddings, ingest_pdf_bytes
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, HTTPException, status, Depends
 
 logger = logging.getLogger('fastapi')
 
@@ -24,8 +25,21 @@ def post_embedding(mystr: str):
     return mystr
 
 
+def is_pdf(file_path: Path) -> bool:
+    return file_path.suffix.lower() == ".pdf"
+
+
+async def validate_pdf(file: UploadFile = File(...)):
+    if not is_pdf(Path(file.filename)):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Only PDF files are allowed",
+        )
+    return file
+
+
 @upload_router.post('/file')
-def upload(file: UploadFile = File(...)):
+def upload(file: UploadFile = Depends(validate_pdf)):
     try:
         print('Uploading file', file.filename)
         contents = file.file.read()
