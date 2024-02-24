@@ -4,23 +4,27 @@ import logging
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from routers.upload import upload_router
+from routers import upload, chat
 
 logger = logging.getLogger('fastapi')
 
-app = FastAPI()
+app = FastAPI(
+    debug=True
+)
 
 #origins = ["http://localhost:3000"]
+origins = ["*"]
 #app.add_middleware(
 #    CORSMiddleware,
 #    allow_origins=origins,
-#    allow_credentials=True,
+#    #allow_credentials=True,
 #    allow_methods=["*"],
 #    allow_headers=["Content-Type"]
 #)
 
 
-app.include_router(upload_router)
+app.include_router(upload.router)
+app.include_router(chat.router)
 
 @app.get("/")
 async def root():

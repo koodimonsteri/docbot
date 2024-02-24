@@ -37,7 +37,7 @@ def ingest_pdf_bytes(pdf_bytes: bytes):
     doc_str = ''
     for page in reader.pages:
         text = page.extract_text()
-        doc_str += text + '\n'
+        doc_str += text
         
     print('Splitting text.')
     splitter = RecursiveCharacterTextSplitter(
