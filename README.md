@@ -1,7 +1,10 @@
 # Document chatbot
 
 
-- Backend to create / search embeddings
+Backend
+- Create embedding from text
+- Create embeddings from pdf file
+- Search embeddings
 
 TODO:
 - Chat endpoint
