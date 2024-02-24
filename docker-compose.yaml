@@ -1,0 +1,32 @@
+
+version: '3.7'
+
+services:
+
+  db:
+    #hostname: db
+    image: ankane/pgvector
+    ports:
+     - 5432:5432
+    restart: always
+    env_file:
+      - ./backend/db_secrets.env
+    #volumes:
+    # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - ./backend/secrets.env
+      - ./backend/db_secrets.env
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/app:/app
+    depends_on:
+      - db
