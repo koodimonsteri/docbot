@@ -5,3 +5,6 @@ psycopg2-binary==2.9.9
 openai==1.9.0
 SQLAlchemy==2.0.25
 pgvector==0.2.5
+python-multipart==0.0.9
+pypdf==4.0.2
+langchain==0.1.3

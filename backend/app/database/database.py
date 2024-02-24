@@ -1,14 +1,18 @@
+from io import BytesIO
 import logging
 import os
 
+from fastapi import UploadFile
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from openai import OpenAI
+from pypdf import PdfReader
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 
 from database.model import Embedding
 import settings
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('fastapi')
 
 
 def get_engine():
@@ -25,6 +29,42 @@ def get_session(engine=None):
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
+
+
+def ingest_pdf_bytes(pdf_bytes: bytes):
+    print('Extracting text.')
+    reader = PdfReader(BytesIO(pdf_bytes))
+    doc_str = ''
+    for page in reader.pages:
+        text = page.extract_text()
+        doc_str += text + '\n'
+        
+    print('Splitting text.')
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size = 10,
+        chunk_overlap = 2
+    )
+    splits = splitter.split_text(doc_str)
+    print(splits)
+
+    logger.info('Creating embeddings')
+    client = OpenAI()
+    embeddings = client.embeddings.create(input = splits, model=settings.EMBEDDING_MODEL).data
+
+    session = get_session()
+    try:
+        for text, embedding in zip(splits, embeddings):
+            logger.info('Add new embeddings to database')
+            session.add(Embedding(
+                embedding=embedding.embedding,
+                text=text
+            ))
+        session.commit()
+    except (Exception) as error:
+        print("Error while writing to DB", error)
+        session.rollback()
+    finally:
+        session.close()
 
 
 def ingest_embeddings(text: str):
@@ -69,11 +109,12 @@ def search_embeddings(text: str):
     session = get_session()
     try:
         result = session.scalars(select(Embedding).order_by(Embedding.embedding.cosine_distance(embeddings)).limit(3))
-        print(result)
-        return result
+        results = [x.text for x in result]
+        return results
     except Exception as error:
         print("Error..", error)
     finally:
         session.close()
+
 
 

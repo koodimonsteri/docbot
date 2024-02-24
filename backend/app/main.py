@@ -1,10 +1,10 @@
 import os
 import logging
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from routers.my_router import testrouter
+from routers.upload import upload_router
 
 logger = logging.getLogger('fastapi')
 
@@ -20,7 +20,7 @@ app = FastAPI()
 #)
 
 
-app.include_router(testrouter)
+app.include_router(upload_router)
 
 @app.get("/")
 async def root():
