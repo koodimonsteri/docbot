@@ -8,11 +8,11 @@
 - Chat websocket  
 **TODOs:**  
 - Use embeddings in chat  
-- Save user chat history to db  
-- Save uploaded pdf files to db for shared usage between users  
+- Chat histories?
+- Save uploaded pdf file info to db for shared usage between users  
 
 **Frontend**  
-- Very simple chat app  
+- Chat app
+- Sidepanel to upload / select file used in chat
 **TODOs:**  
-- Sidepanel to upload / select from existing pdf files to be used in embeddings  
-- Multiple chat histories?  
+- Chat histories?  
