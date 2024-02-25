@@ -10,7 +10,7 @@ const ChatBot = () => {
   const [existingFiles, setExistingFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadFile, setUploadFile] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('');
+  const [uploadStatus, setUploadStatus] = useState(null);
 
   useEffect(() => {
     const generatedUserId = uuidv4();
@@ -58,8 +58,8 @@ const ChatBot = () => {
 };
 const handleFileUpload = async (e) => {
     const file = uploadFile
-    if (file) {
-      console.log('Uploading file:', file)
+    if (uploadFile && uploadFile.type === 'application/pdf')  {
+      console.log('Uploading pdf file:', file)
       //const formData = new FormData();
       //formData.append('file', file);
       //try {
@@ -71,15 +71,18 @@ const handleFileUpload = async (e) => {
       //} catch (error) {
       //  console.error('Error uploading file:', error);
       //}
-    }
+      setUploadStatus('File uploaded successfully');
+      setUploadFile(null);
+    } else {
+        // Optionally, you can provide feedback to the user that the file is invalid.
+        setUploadStatus('Error uploading file. Please try again.');
+        console.error('Invalid file type. Please choose a PDF file.');
   };
+};
   const handleUploadFileChange = (e) => {
+    console.log('file change', e.target.files[0])
     setUploadFile(e.target.files[0]);
   };
-
-const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-};
 
 const handleDropDownFileSelect = (e) => {
     const fileId = e.target.value;
@@ -115,14 +118,16 @@ const handleDropDownFileSelect = (e) => {
   return (
     <div className="chatbot-container">
         <div className="file-panel">
+            <h2>DocBot</h2>
             <div className="file-upload">
+            <p>Upload PDF file</p>
             <input type="file" onChange={handleUploadFileChange} />
             <button onClick={handleFileUpload} disabled={!uploadFile}>
                 Upload
             </button>
             </div>
-
             <div className="file-dropdown">
+            <p>Select file to be used in chat</p>
             <select onChange={handleDropDownFileSelect} value={selectedFile ? selectedFile.id : ''}>
                 <option value="">Select a file</option>
                 {existingFiles.map((file) => (
