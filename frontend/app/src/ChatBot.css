@@ -1,59 +1,106 @@
 
-/* Chat container styles */
+
+  /* File panel styles */
+.file-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 300px; 
+    background-color: #4CAF50;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.file-upload {
+    margin: 10px;
+}
+  
+.search-input {
+    margin: 10px;
+}
+  
+.file-dropdown {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 10px;
+}
+
+  /* Chat container styles */
+  
+.chatbot-container {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    background-color: lightgrey;
+    align-items: center;
+  }
+
 .chat-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
     justify-content: flex-end;
-    max-width: 600px; /* Set your desired maximum width */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 50px; /* Add padding to the container */
+    background-color: lightgray;
+    width: 40%;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: auto;
+    padding: 20px;
     box-sizing: border-box;
-  }
-  
-  /* File panel styles */
-  .file-panel {
-    margin: 10px;
-  }
-  
-  /* Chat history styles */
-  .chat-history {
+}
+
+.chat-history {
     flex-grow: 1;
     overflow-y: auto;
     width: 80%;
     box-sizing: border-box;
-  }
+}
   
-  /* Chat input styles */
-  .chat-input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.chat-input {
     width: 80%;
     margin-bottom: 10px;
     box-sizing: border-box;
-  }
+    border: 1px solid #030303;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    border: none;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.chat-input button {
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
   
-  /* Message styles */
-  .message {
+.message {
     list-style: none;
     margin: 5px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #030303;
     border-radius: 5px;
     width: 80%;
     position: relative;
-  }
+}
   
-  /* User indicator styles */
-  .sent .indicator {
+.sent .indicator {
     position: absolute;
     left: -40px;
-  }
-  
-  /* Bot indicator styles */
-  .received .indicator {
+}
+
+.received .indicator {
     position: absolute;
     right: -40px;
-  }
+}
