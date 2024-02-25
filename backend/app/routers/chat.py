@@ -64,7 +64,6 @@ async def get_openai_response(message: str) -> str:
     client = OpenAI()
     result = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        #response_format={ "type": "json_object" },
         messages=[{"role": "user", "content": message}]
     )
     

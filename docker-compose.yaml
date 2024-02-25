@@ -30,3 +30,20 @@ services:
       - ./backend/app:/app
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    #command: npm start
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/app:/app
+    environment:
+    - CHOKIDAR_USEPOLLING=true
+    - WATCHPACK_POLLING=true
+    - FAST_REFRESH=false
+    - WDS_SOCKET_PORT=3000
