@@ -1,16 +1,15 @@
-# Use a Node.js base image
+# Use an official Node runtime as a base image
 FROM node:14
 
 WORKDIR /app
 
-COPY /app/package*.json .
-
-RUN npm install && sleep 5
-
 COPY /app .
 
-RUN npm run build
+# Install any needed packages specified in package.json
+RUN npm install
 
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
 
+# Run app.js when the container launches
 CMD ["npm", "start"]

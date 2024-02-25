@@ -1,0 +1,59 @@
+
+/* Chat container styles */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: flex-end;
+    max-width: 600px; /* Set your desired maximum width */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 50px; /* Add padding to the container */
+    box-sizing: border-box;
+  }
+  
+  /* File panel styles */
+  .file-panel {
+    margin: 10px;
+  }
+  
+  /* Chat history styles */
+  .chat-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    width: 80%;
+    box-sizing: border-box;
+  }
+  
+  /* Chat input styles */
+  .chat-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Message styles */
+  .message {
+    list-style: none;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    position: relative;
+  }
+  
+  /* User indicator styles */
+  .sent .indicator {
+    position: absolute;
+    left: -40px;
+  }
+  
+  /* Bot indicator styles */
+  .received .indicator {
+    position: absolute;
+    right: -40px;
+  }
