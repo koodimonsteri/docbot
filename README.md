@@ -12,7 +12,7 @@
 - Save uploaded pdf file info to db for shared usage between users  
 
 **Frontend**  
-- Chat app
-- Sidepanel to upload / select file used in chat
+- Chat app  
+- Sidepanel to upload / select file used in chat  
 **TODOs:**  
 - Chat histories?  
