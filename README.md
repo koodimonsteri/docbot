@@ -1,18 +1,18 @@
 # Document chatbot
 
+Chat app to chat with OpenAI llm model.  
+Upload new pdf file or browse existing and then ask questions about it.  
 
-**Backend**  
-- Create embedding from text  
+**FastAPI Backend**  
 - Create embeddings from pdf file  
-- Search embeddings  
+- Save embeddings and filename to database  
+- Retrieve embeddings from database  
 - Chat websocket  
-**TODOs:**  
 - Use embeddings in chat  
-- Chat histories?
-- Save uploaded pdf file info to db for shared usage between users  
 
-**Frontend**  
-- Chat app  
+**React Frontend**  
+- Chat  
 - Sidepanel to upload / select file used in chat  
+
 **TODOs:**  
 - Chat histories?  
