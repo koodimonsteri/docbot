@@ -4,7 +4,7 @@ import logging
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from routers import upload, chat
+from routers import files, chat
 
 logger = logging.getLogger('fastapi')
 
@@ -23,7 +23,7 @@ app.add_middleware(
 )
 
 
-app.include_router(upload.router)
+app.include_router(files.router)
 app.include_router(chat.router)
 
 @app.get("/")

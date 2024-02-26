@@ -43,7 +43,7 @@ const ChatBot = () => {
 
   const fetchExistingFiles = async () => {
     try {
-      const response = await fetch('http://localhost:8000/upload/file');
+      const response = await fetch('http://localhost:8000/files');
       const existing_files = await response.json();
       
       const convertedFiles = existing_files.files.map((fileName, index) => ({
@@ -64,7 +64,7 @@ const handleFileUpload = async (e) => {
       const formData = new FormData();
       formData.append('file', file);
       try {
-        await fetch('http://localhost:8000/upload/file', {
+        await fetch('http://localhost:8000/files', {
           method: 'POST',
           body: formData,
         });

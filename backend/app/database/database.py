@@ -113,16 +113,20 @@ def ingest_embeddings(text: str):
         session.close()
 
 
-def search_embeddings(text: str):
+def search_embeddings(file_name: str, text: str):
     logger.info('Searching embeddings for text: %s', text)
 
     client = OpenAI()
-    #texts = [x.replace("\n", " ") for x in texts]
     embeddings = client.embeddings.create(input = [text], model=settings.EMBEDDING_MODEL).data[0].embedding
-    #print('embeddings: ', embeddings)
+    
     session = get_session()
     try:
-        result = session.scalars(select(Embedding).order_by(Embedding.embedding.cosine_distance(embeddings)).limit(3))
+        result = session.scalars(
+            select(Embedding)
+            .filter(Embedding.file_name == file_name)
+            .order_by(Embedding.embedding.cosine_distance(embeddings))
+            .limit(3)
+        )
         results = [x.text for x in result]
         return results
     except Exception as error:

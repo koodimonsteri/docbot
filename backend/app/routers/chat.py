@@ -3,9 +3,9 @@ from typing import Dict
 
 from fastapi import APIRouter, FastAPI, WebSocket, WebSocketDisconnect, Request, Depends, HTTPException
 from fastapi.responses import HTMLResponse
-
 from openai import OpenAI
 
+from database.database import search_embeddings
 
 router = APIRouter(
     prefix='/chat'
@@ -38,17 +38,20 @@ async def chat_endpoint(user_id: str, websocket: WebSocket):
     try:
         while True:
             message_json = await websocket.receive_json()
-            print('selected file:', message_json.get('file_name', {}))
-            response = await get_openai_response(message_json.get('text'))
-            print('Sending response back to client:', response)
-            #await websocket.send_json({'message': response})
+            message_text = message_json.get('text')
+            message_filename = message_json.get('file_name')
+            
+            if not message_filename:
+                response = await get_openai_response(message_text)
+                print('Sending response back to client:', response)
+            else:
+                # Embeddings to chat in here
+                response = await get_openai_response_from_file(message_filename, message_text)
+                
             await manager.send_message(user_id, response)
     except WebSocketDisconnect:
         print('Websocket disconnected:', user_id)
         manager.remove_connection(user_id)
-    #finally:
-    #    print('Closing websocket connection!')
-    #    await websocket.close()
 
 
 async def get_openai_response(message: str) -> str:
@@ -61,3 +64,17 @@ async def get_openai_response(message: str) -> str:
     res = [x.message.content.strip() for x in result.choices]
     return res[0]
 
+
+async def get_openai_response_from_file(file_name: str, message: str) -> str:
+    embeddings_result = search_embeddings(file_name, message)
+    print(embeddings_result)
+    
+    client = OpenAI()
+    result = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": message}] + [{"role": "assistant", "content": response} for response in embeddings_result]
+    )
+
+    res = [x.message.content.strip() for x in result.choices]
+    print(res)
+    return res[0]

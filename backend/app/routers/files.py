@@ -7,22 +7,22 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, status, Depends
 logger = logging.getLogger('fastapi')
 
 router = APIRouter(
-    prefix='/upload'
+    prefix='/files'
 )
 
 
-@router.get('/')
-def get_embeddings(mystr: str):
-    res = search_embeddings(mystr)
-    return {'results': res}
+#@router.get('/')
+#def get_embeddings(mystr: str):
+#    res = search_embeddings(mystr)
+#    return {'results': res}
 
 
-@router.post('/')
-def post_embedding(mystr: str):
-    print(mystr)
-    res = ingest_embeddings(mystr)
-    print(res)
-    return mystr
+#@router.post('/')
+#def post_embedding(mystr: str):
+#    print(mystr)
+#    res = ingest_embeddings(mystr)
+#    print(res)
+#    return mystr
 
 
 def is_pdf(file_path: Path) -> bool:
@@ -38,12 +38,12 @@ async def validate_pdf(file: UploadFile = File(...)):
     return file
 
 
-@router.get('/file')
+@router.get('')
 def get_files():
     return {'files': get_all_pdf_filenames()}
 
 
-@router.post('/file')
+@router.post('')
 def upload(file: UploadFile = Depends(validate_pdf)):
     try:
         print('Uploading file', file.filename)
