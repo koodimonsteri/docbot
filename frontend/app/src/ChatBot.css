@@ -15,6 +15,10 @@ h2 {
     overflow-y: auto;
 }
 
+.centered-header {
+    text-align: center;
+}
+
 .file-upload {
     margin: 10px;
 }

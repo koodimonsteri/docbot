@@ -37,8 +37,9 @@ async def chat_endpoint(user_id: str, websocket: WebSocket):
     manager.add_connection(user_id, websocket)
     try:
         while True:
-            data = await websocket.receive_text()
-            response = await get_openai_response(data)
+            message_json = await websocket.receive_json()
+            print('selected file:', message_json.get('file_name', {}))
+            response = await get_openai_response(message_json.get('text'))
             print('Sending response back to client:', response)
             #await websocket.send_json({'message': response})
             await manager.send_message(user_id, response)

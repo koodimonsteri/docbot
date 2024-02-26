@@ -77,7 +77,6 @@ const handleFileUpload = async (e) => {
       fileInput.value = '';
       setUploadFile(null);
     } else {
-        // Optionally, you can provide feedback to the user that the file is invalid.
         setUploadStatus('Error uploading file. Please try again.');
         console.error('Invalid file type. Please choose a PDF file.');
   };
@@ -90,6 +89,7 @@ const handleFileUpload = async (e) => {
 const handleDropDownFileSelect = (e) => {
     const fileId = e.target.value;
     const selected = existingFiles.find((file) => file.id === Number(fileId));
+    console.log(selected)
     setSelectedFile(selected);
   };
 
@@ -107,7 +107,7 @@ const handleDropDownFileSelect = (e) => {
       console.log('Sending message:', message);
 
       updateChatHistory(message);
-      websocket.send(JSON.stringify({ text: newMessage }));
+      websocket.send(JSON.stringify({ text: newMessage, file_name: selectedFile?.name || ''}));
       setNewMessage('');
     }
   };
@@ -121,7 +121,7 @@ const handleDropDownFileSelect = (e) => {
   return (
     <div className="chatbot-container">
         <div className="file-panel">
-            <h2>DocBot</h2>
+            <h2 className="centered-header">DocBot</h2>
             <div className="file-upload">
             <p>Upload PDF file</p>
             <input type="file" onChange={handleUploadFileChange} />
