@@ -31,7 +31,20 @@ def get_session(engine=None):
     return session
 
 
-def ingest_pdf_bytes(pdf_bytes: bytes):
+def pdf_exists_in_database(file_name: str):
+    session = get_session()
+    temp = session.query(Embedding).filter(Embedding.file_name == file_name).all()
+    return bool(temp)
+
+
+def get_all_pdf_filenames():
+    session = get_session()
+    temp = session.query(Embedding).all()
+    files = [x.file_name for x in temp]
+    return set(files)
+
+
+def ingest_pdf_bytes(file_name: str, pdf_bytes: bytes):
     print('Extracting text.')
     reader = PdfReader(BytesIO(pdf_bytes))
     doc_str = ''
@@ -57,7 +70,8 @@ def ingest_pdf_bytes(pdf_bytes: bytes):
             logger.info('Add new embeddings to database')
             session.add(Embedding(
                 embedding=embedding.embedding,
-                text=text
+                text=text,
+                file_name=file_name
             ))
         session.commit()
     except (Exception) as error:

@@ -43,35 +43,38 @@ const ChatBot = () => {
 
   const fetchExistingFiles = async () => {
     try {
-      //const response = await fetch('http://localhost:8000/chat/files');
-      //const data = await response.json();
-      //setUploadedFiles(data.files);
-      const mockFiles = [
-        { id: 1, name: 'file1.pdf' },
-        { id: 2, name: 'file2.pdf' },
-        { id: 3, name: 'file3.pdf' },
-      ];
-      setExistingFiles(mockFiles)
+      const response = await fetch('http://localhost:8000/upload/file');
+      const existing_files = await response.json();
+      
+      const convertedFiles = existing_files.files.map((fileName, index) => ({
+        id: index + 1,
+        name: fileName,
+      }));
+
+      setExistingFiles(convertedFiles)
     } catch (error) {
       console.error('Error fetching uploaded files:', error);
     }
 };
+
 const handleFileUpload = async (e) => {
     const file = uploadFile
     if (uploadFile && uploadFile.type === 'application/pdf')  {
       console.log('Uploading pdf file:', file)
-      //const formData = new FormData();
-      //formData.append('file', file);
-      //try {
-      //  await fetch('http://localhost:8000/upload/file', {
-      //    method: 'POST',
-      //    body: formData,
-      //  });
-      //  fetchUploadedFiles();
-      //} catch (error) {
-      //  console.error('Error uploading file:', error);
-      //}
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        await fetch('http://localhost:8000/upload/file', {
+          method: 'POST',
+          body: formData,
+        });
+        fetchExistingFiles();
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
       setUploadStatus('File uploaded successfully');
+      const fileInput = document.querySelector('input[type="file"]');
+      fileInput.value = '';
       setUploadFile(null);
     } else {
         // Optionally, you can provide feedback to the user that the file is invalid.

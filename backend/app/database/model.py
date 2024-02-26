@@ -11,4 +11,5 @@ class Embedding(Base):
     id = Column(BigInteger, primary_key=True)
     embedding = mapped_column(Vector())
     text = Column(TEXT)
+    file_name = Column(TEXT)
     time_created = Column(DateTime(timezone=True), server_default=func.now())

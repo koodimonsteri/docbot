@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from database.database import search_embeddings, ingest_embeddings, ingest_pdf_bytes
+from database.database import search_embeddings, ingest_embeddings, ingest_pdf_bytes, pdf_exists_in_database, get_all_pdf_filenames
 from fastapi import APIRouter, UploadFile, File, HTTPException, status, Depends
 
 logger = logging.getLogger('fastapi')
@@ -38,12 +38,19 @@ async def validate_pdf(file: UploadFile = File(...)):
     return file
 
 
+@router.get('/file')
+def get_files():
+    return {'files': get_all_pdf_filenames()}
+
+
 @router.post('/file')
 def upload(file: UploadFile = Depends(validate_pdf)):
     try:
         print('Uploading file', file.filename)
+        if pdf_exists_in_database(file.filename):
+            return {"message": "File exists already in database!"}
         contents = file.file.read()
-        ingest_pdf_bytes(contents)
+        ingest_pdf_bytes(file.filename, contents)
 
     except Exception as e:
         logger.exception(e)
