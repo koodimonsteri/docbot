@@ -103,12 +103,12 @@ h2 {
     position: relative;
 }
   
-.sent .indicator {
+.user .indicator {
     position: absolute;
     left: -40px;
 }
 
-.received .indicator {
+.bot .indicator {
     position: absolute;
     right: -40px;
 }
