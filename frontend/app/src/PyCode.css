@@ -1,0 +1,58 @@
+
+
+.app-container {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-color: rgba(128, 255, 0, 0.555);
+}
+
+.column-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 90vh;
+    margin: 20px auto;
+    justify-content: flex-end;
+  }
+  
+  .column {
+    height: 80%;
+    flex: 1;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #504646;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background-color: lightgray;
+  }
+  
+  .code-column,
+  .text-column {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+  }
+  
+  
+  .code-column textarea {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+  
+.button-box {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+p {
+    margin: 0px;
+    white-space: pre-wrap;
+}
