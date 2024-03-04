@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from database.database import search_embeddings, ingest_embeddings, ingest_pdf_bytes, pdf_exists_in_database, get_all_pdf_filenames
+from database.database import ingest_pdf_bytes, pdf_exists_in_database, get_all_pdf_filenames
 from fastapi import APIRouter, UploadFile, File, HTTPException, status, Depends
 
 logger = logging.getLogger('fastapi')
@@ -9,20 +9,6 @@ logger = logging.getLogger('fastapi')
 router = APIRouter(
     prefix='/files'
 )
-
-
-#@router.get('/')
-#def get_embeddings(mystr: str):
-#    res = search_embeddings(mystr)
-#    return {'results': res}
-
-
-#@router.post('/')
-#def post_embedding(mystr: str):
-#    print(mystr)
-#    res = ingest_embeddings(mystr)
-#    print(res)
-#    return mystr
 
 
 def is_pdf(file_path: Path) -> bool:

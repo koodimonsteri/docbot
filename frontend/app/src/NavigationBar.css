@@ -1,0 +1,31 @@
+
+.navbar {
+    background-color: darkgreen;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .navList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navList li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .navList a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+
+.active-link {
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 5px;
+    color: white;
+    text-decoration: none;
+}

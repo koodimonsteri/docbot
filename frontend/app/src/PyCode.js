@@ -38,6 +38,35 @@ const PyCode = () => {
       //res = await result.json()
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === 'Tab' && e.shiftKey) {
+        e.preventDefault(); 
+  
+        const { selectionStart } = e.target;
+        const newPosition = Math.max(selectionStart - 1, 0);
+  
+        e.target.selectionStart = e.target.selectionEnd = newPosition;
+      } else if (e.key === 'Tab' && !e.shiftKey) {
+        e.preventDefault();
+        console.log('pressed tab')
+        const { selectionStart, selectionEnd, value } = e.target;
+        const newValue =
+          value.substring(0, selectionStart) +
+          '\t' +
+          value.substring(selectionEnd);
+  
+        e.target.value = newValue;
+        e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
+      }
+    };
+    const handlePaste = (e) => {
+      e.preventDefault();
+  
+      const pastedText = e.clipboardData.getData('text/plain');
+  
+      setCode(pastedText);
+    };
+
     return (
       <div className="app-container">
         <div className="button-box">
@@ -49,7 +78,7 @@ const PyCode = () => {
         </div>
         <div className="column-container">
           <div className="column code-column">
-            <textarea value={code} onChange={(e) => setCode(e.target.value)} />
+            <textarea value={code} onChange={(e) => setCode(e.target.value)} onKeyDown={handleKeyDown} handlePaste={handlePaste}/>
           </div>
           <div className="column text-column">
             <p>{resultCode}</p>

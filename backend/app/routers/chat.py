@@ -38,7 +38,7 @@ class WebSocketManager:
         if user_id in self.connections:
             await self.connections[user_id].send_json(message)
         if user_id in self.chat_histories:
-            self.chat_histories.append
+            self.chat_histories.append(message)
 
 
 manager = WebSocketManager()
@@ -99,7 +99,9 @@ async def get_openai_response_stream(message: str):
     client = OpenAI()
     for partial_result in client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": message}],
+        messages=[
+            {"role": "user", "content": message}
+        ],
         stream=True
     ):
         partial_msg = partial_result.choices[0].delta.content
@@ -122,8 +124,7 @@ async def get_openai_response_from_file(file_name: str, message: str) -> str:
 
 async def get_openai_response_from_file_stream(file_name: str, message: str):
     embeddings_result = search_embeddings(file_name, message)
-    print(embeddings_result)
-
+    
     client = OpenAI()
     for partial_result in client.chat.completions.create(
         model="gpt-3.5-turbo",

@@ -4,15 +4,15 @@
     width: 100%;
     height: 100%;
     padding: 10px;
-    background-color: rgba(128, 255, 0, 0.555);
+    background-color: rgba(110, 201, 20, 0.774);
 }
 
 .column-container {
     display: flex;
     flex-direction: row;
     width: 80%;
-    height: 90vh;
-    margin: 20px auto;
+    height: 80vh;
+    margin: auto;
     justify-content: flex-end;
   }
   
@@ -51,6 +51,11 @@
     align-items: center;
     margin: auto;
 }
+
+.button-box button {
+    margin: 5px
+}
+
 
 p {
     margin: 0px;

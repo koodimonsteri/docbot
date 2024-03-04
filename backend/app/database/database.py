@@ -54,8 +54,8 @@ def ingest_pdf_bytes(file_name: str, pdf_bytes: bytes):
         
     print('Splitting text.')
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size = 10,
-        chunk_overlap = 2
+        chunk_size = 2000,
+        chunk_overlap = 100
     )
     splits = splitter.split_text(doc_str)
     print(splits)
