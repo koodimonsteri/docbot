@@ -1,8 +1,8 @@
 # Document chatbot & Python programming bot
 
-# DocBot
+# DocBot  
 Chat app to chat with OpenAI llm model.  
-Upload new pdf file or browse existing and then ask questions about it.  
+Upload pdf file or use existing and ask questions about it.  
 
 # CodeBot  
 Write python code and enhance / add logging / find bugs  
