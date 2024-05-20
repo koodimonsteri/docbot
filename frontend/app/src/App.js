@@ -7,14 +7,16 @@ import NavigationBar from './NavigationBar';
 
 function App() {
   return (
-  <div>
+  <div className="app-container">
     <Router>
       <NavigationBar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/code" />} />
-        <Route path="/chat" element={<ChatBot/>}/>
-        <Route path="/code" element={<PyCode/>} />
-      </Routes>
+      <div className="content-container">
+        <Routes>
+          <Route path="/" element={<Navigate to="/chat" />} />
+          <Route path="/chat" element={<ChatBot/>}/>
+          <Route path="/code" element={<PyCode/>} />
+        </Routes>
+      </div>
     </Router>
   </div>
   );

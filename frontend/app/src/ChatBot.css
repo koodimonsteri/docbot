@@ -8,10 +8,9 @@ h2 {
 .file-panel {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     width: 300px; 
     background-color: #4CAF50;
-    border-radius: 10px;
     /* overflow-y: auto; */
 }
 
@@ -38,7 +37,7 @@ h2 {
 .chatbot-container {
     display: flex;
     flex: 1;
-    height: 100vh;
+    height: 100%;
     background-color: lightgrey;
     align-items: center;
 }
@@ -47,7 +46,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     justify-content: flex-end;
     background-color: lightgray;
     width: 40%;

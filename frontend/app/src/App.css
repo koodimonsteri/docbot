@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  overflow: auto;
+}
