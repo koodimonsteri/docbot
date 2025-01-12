@@ -1,7 +1,7 @@
 # Document chatbot & Python programming bot
 
 # DocBot  
-Chat app to chat with OpenAI llm model.  
+RAG app to chat with OpenAI llm model.  
 Upload pdf file or use existing and ask questions about it.  
 
 # CodeBot  
